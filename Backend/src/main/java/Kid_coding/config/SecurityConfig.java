@@ -25,7 +25,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(request -> {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080")); // add your frontend origin(s)
+                config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080","https://blockjava-44bpela1j-kanishka032s-projects.vercel.app")); // add your frontend origin(s)
                 config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
                 config.setAllowedHeaders(List.of("*"));
                 config.setAllowCredentials(true);
