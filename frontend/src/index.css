@@ -1,0 +1,491 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Kid-Friendly Coding App Design System
+   Inspired by Scratch + Duolingo - Playful, Colorful, Accessible 
+   ✅ FIXED: All Tailwind CSS variables properly implemented */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Comic+Neue:wght@400;700&display=swap');
+
+@layer base {
+  :root {
+    /* Main Background - Warm cream for easy reading */
+    --background: 45 30% 97%;
+    --foreground: 240 20% 20%;
+
+    /* Card/Panel backgrounds */
+    --card: 0 0% 100%;
+    --card-foreground: 240 20% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 20% 20%;
+
+    /* Primary - Friendly Teal */
+    --primary: 175 70% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Playful Coral */
+    --secondary: 15 90% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted backgrounds */
+    --muted: 45 20% 92%;
+    --muted-foreground: 240 10% 40%;
+
+    /* Accent - Sunny Yellow */
+    --accent: 45 95% 60%;
+    --accent-foreground: 240 20% 20%;
+
+    /* Destructive - Soft Red */
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & Inputs */
+    --border: 220 15% 85%;
+    --input: 220 15% 90%;
+    --ring: 175 70% 45%;
+
+    --radius: 1rem;
+
+    /* Block Category Colors */
+    --block-motion: 215 80% 55%;
+    --block-control: 35 90% 55%;
+    --block-variables: 280 65% 55%;
+    --block-sound: 330 75% 60%;
+    --block-events: 45 95% 55%;
+
+    /* Stage Background */
+    --stage: 200 30% 96%;
+    --stage-border: 200 20% 80%;
+
+    /* Navigation */
+    --nav-bg: 240 20% 25%;
+    --nav-foreground: 0 0% 100%;
+    --nav-active: 175 70% 45%;
+
+    /* Success/Fun colors */
+    --success: 145 65% 45%;
+    --success-foreground: 0 0% 100%;
+
+    /* Fun Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(175 70% 45%), hsl(195 80% 50%));
+    --gradient-fun: linear-gradient(135deg, hsl(330 75% 60%), hsl(280 65% 55%));
+    --gradient-sunny: linear-gradient(135deg, hsl(45 95% 60%), hsl(35 90% 55%));
+    --gradient-stage: linear-gradient(180deg, hsl(200 30% 98%), hsl(200 30% 92%));
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(240 20% 20% / 0.1);
+    --shadow-button: 0 4px 12px -2px hsl(175 70% 45% / 0.35);
+    --shadow-card: 0 8px 30px -8px hsl(240 20% 20% / 0.12);
+    --shadow-block: 0 3px 8px -2px hsl(240 20% 20% / 0.2);
+
+    /* Sidebar */
+    --sidebar-background: 240 20% 25%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 175 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 15% 35%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 15% 35%;
+    --sidebar-ring: 175 70% 50%;
+  }
+
+  .dark {
+    --background: 240 20% 12%;
+    --foreground: 45 20% 95%;
+
+    --card: 240 18% 16%;
+    --card-foreground: 45 20% 95%;
+
+    --popover: 240 18% 16%;
+    --popover-foreground: 45 20% 95%;
+
+    --primary: 175 65% 50%;
+    --primary-foreground: 240 20% 10%;
+
+    --secondary: 15 85% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 15% 22%;
+    --muted-foreground: 220 15% 70%;
+
+    --accent: 45 90% 55%;
+    --accent-foreground: 240 20% 10%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 15% 25%;
+    --input: 240 15% 25%;
+    --ring: 175 65% 50%;
+
+    --stage: 240 18% 18%;
+    --stage-border: 240 15% 30%;
+
+    --sidebar-background: 240 20% 10%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 175 65% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 15% 20%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 15% 20%;
+    --sidebar-ring: 175 65% 50%;
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Fredoka', 'Comic Neue', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  /* Navigation styles */
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200;
+    @apply text-sidebar-foreground/80 hover:text-sidebar-foreground;
+    @apply hover:bg-sidebar-accent;
+  }
+
+  .nav-item-active {
+    @apply bg-primary text-primary-foreground shadow-lg;
+  }
+
+  /* Block category colors */
+  .block-motion {
+    background-color: hsl(var(--block-motion));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .block-control {
+    background-color: hsl(var(--block-control));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .block-variables {
+    background-color: hsl(var(--block-variables));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .block-sound {
+    background-color: hsl(var(--block-sound));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .block-events {
+    background-color: hsl(var(--block-events));
+    color: hsl(var(--primary-foreground));
+  }
+
+  /* Stage area */
+  .stage-area {
+    background: var(--gradient-stage, linear-gradient(180deg, hsl(200 30% 98%), hsl(200 30% 92%)));
+    @apply border-2 rounded-2xl overflow-hidden;
+    border-color: hsl(var(--stage-border));
+    box-shadow: inset 0 2px 20px -5px hsl(var(--stage-border) / 0.5);
+  }
+
+  /* Fun buttons */
+  .btn-fun {
+    @apply font-semibold rounded-xl px-6 py-3 transition-all duration-200;
+    @apply transform hover:scale-105 active:scale-95;
+    box-shadow: var(--shadow-button);
+  }
+
+  .btn-run {
+    @apply bg-success text-success-foreground;
+    box-shadow: 0 4px 12px -2px hsl(var(--success) / 0.4);
+  }
+
+  .btn-stop {
+    @apply bg-destructive text-destructive-foreground;
+    box-shadow: 0 4px 12px -2px hsl(var(--destructive) / 0.4);
+  }
+
+  /* Code panel */
+  .code-panel {
+    @apply bg-muted/50 rounded-xl p-4 font-mono text-sm border;
+  }
+
+  /* Floating action button */
+  .fab {
+    @apply fixed bottom-6 right-6 w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110 active:scale-95;
+  }
+
+  /* Points display */
+  .points-badge {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-accent-foreground font-bold shadow-md;
+  }
+}
+
+@layer utilities {
+  /* Kid-friendly animations */
+  .animate-bounce-soft {
+    animation: bounce-soft 2s ease-in-out infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 0.5s ease-in-out;
+  }
+
+  .animate-pop {
+    animation: pop 0.3s ease-out;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-celebrate {
+    animation: celebrate 0.6s ease-out;
+  }
+
+  /* Sprite animations */
+  .sprite-walk {
+    animation: sprite-walk 0.4s steps(4) infinite;
+  }
+
+  .sprite-jump {
+    animation: sprite-jump 0.5s ease-out;
+  }
+}
+
+/* Keyframes */
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2) rotate(-5deg); }
+  50% { transform: scale(1.2) rotate(5deg); }
+  75% { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes sprite-walk {
+  from { background-position-x: 0; }
+  to { background-position-x: -200px; }
+}
+
+@keyframes sprite-jump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+
+/* ========================================
+   BLOCKLY CUSTOMIZATIONS - ENHANCED & FIXED
+   ======================================= */
+
+/* Main workspace styling */
+.blocklySvg {
+  background: hsl(var(--card)) !important;
+}
+
+.blocklyMainBackground {
+  fill: hsl(var(--card)) !important;
+  stroke: none !important;
+}
+
+/* Toolbox container - clean background */
+.blocklyToolboxDiv {
+  background: hsl(var(--muted)) !important;
+  border-right: 2px solid hsl(var(--border)) !important;
+  border-radius: 0 !important;
+  padding: 8px 0 !important;
+}
+
+/* Category row styling - FIXED */
+.blocklyTreeRow {
+  height: 40px !important;
+  padding: 8px 12px !important;
+  margin: 4px 8px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.blocklyTreeRow:hover {
+  background-color: hsla(var(--primary), 0.1) !important;
+  transform: translateX(2px) !important;
+}
+
+/* Selected category with green indicator bar */
+.blocklyTreeRow.blocklyTreeSelected {
+  background-color: hsla(var(--primary), 0.15) !important;
+  position: relative !important;
+}
+
+.blocklyTreeRow.blocklyTreeSelected::before {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 4px !important;
+  background-color: hsl(var(--primary)) !important;
+  border-radius: 0 4px 4px 0 !important;
+}
+
+/* Category label - ENHANCED TYPOGRAPHY */
+.blocklyTreeLabel {
+  font-family: 'Fredoka', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: hsl(var(--foreground)) !important;
+  letter-spacing: 0.3px !important;
+  line-height: 1.2 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+.blocklyTreeSelected .blocklyTreeLabel {
+  color: hsl(var(--primary-foreground)) !important;
+  font-weight: 700 !important;
+}
+
+/* Category icon styling */
+.blocklyTreeIcon {
+  margin-right: 8px !important;
+  width: 20px !important;
+  height: 20px !important;
+  opacity: 0.8 !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+.blocklyTreeSelected .blocklyTreeIcon {
+  opacity: 1 !important;
+}
+
+/* Flyout panel */
+.blocklyFlyoutBackground {
+  fill: hsl(var(--card)) !important;
+  fill-opacity: 0.95 !important;
+}
+
+.blocklyFlyout {
+  box-shadow: -2px 0 8px hsl(0 0% 0% / 0.05) !important;
+}
+
+/* Add spacing between blocks in flyout */
+.blocklyFlyout .blocklyBlockCanvas > .blocklyDraggable {
+  margin-bottom: 16px !important;
+}
+
+.blocklyFlyout .blocklyBlockCanvas > .blocklyDraggable:first-child {
+  margin-top: 8px !important;
+}
+
+.blocklyFlyout .blocklyBlockCanvas > .blocklyDraggable:last-child {
+  margin-bottom: 24px !important;
+}
+
+/* Scrollbar styling - FIXED */
+.blocklyScrollbarHandle {
+  fill: hsl(var(--muted-foreground)) !important;
+  rx: 4 !important;
+  ry: 4 !important;
+}
+
+.blocklyScrollbarHandle:hover {
+  fill: hsl(var(--foreground)) !important;
+}
+
+.blocklyScrollbarBackground {
+  fill: transparent !important;
+}
+
+/* Block styling improvements */
+.blocklyDraggable {
+  transition: transform 0.1s ease !important;
+}
+
+.blocklyDraggable:hover {
+  filter: brightness(1.05) !important;
+}
+
+/* Trash can */
+.blocklyTrash {
+  opacity: 0.7 !important;
+}
+
+.blocklyTrash:hover {
+  opacity: 1 !important;
+}
+
+/* Zoom controls */
+.blocklyZoom {
+  filter: drop-shadow(0 2px 4px hsl(0 0% 0% / 0.1)) !important;
+}
+
+/* Context menu */
+.blocklyContextMenu {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px hsl(0 0% 0% / 0.15) !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+.blocklyMenuItem {
+  padding: 8px 16px !important;
+  font-family: 'Fredoka', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 14px !important;
+}
+
+.blocklyMenuItem:hover {
+  background-color: hsla(var(--primary), 0.1) !important;
+}
+
+/* Fix for category row layout */
+.blocklyTreeRowContentContainer {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Hide Blockly scrollbars completely */
+.blocklyScrollbarVertical,
+.blocklyScrollbarHorizontal,
+.blocklyScrollbarBackground,
+div[class*="blocklyScrollbar"] {
+  display: none !important;
+}
+
+/* Remove vertical line/separator */
+.blocklyMainBackground {
+  stroke-width: 0 !important;
+}
