@@ -1,6 +1,4 @@
-Absolutely! Here’s a **full, polished `README.md`** for your **BlockJava** project, integrating **React TSX frontend**, **Google Blockly**, **Spring Boot backend**, and **PostgreSQL**, with all sections GitHub typically expects:
 
-```markdown
 # BlockJava
 
 **BlockJava** is a gamified, interactive coding platform built with **React TSX**, **Google Blockly**, **Spring Boot**, and **PostgreSQL**. Users can drag-and-drop JavaScript blocks to complete **50+ coding tasks**, earn **points and XP**, and track their progress on a **real-time leaderboard**. It combines visual programming, gamification, and a robust backend for a fun and educational experience.
