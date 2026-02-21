@@ -1,5 +1,5 @@
-# Stage 1: Build
-FROM gradle:8.3-jdk17 AS build
+# Stage 1: Build - Use JDK 21
+FROM gradle:8.3-jdk21 AS build
 WORKDIR /app
 
 # Copy Gradle files
@@ -7,10 +7,11 @@ COPY build.gradle settings.gradle ./
 COPY src ./src
 
 # Build the project (skip tests)
-RUN gradle clean build -x test
+# Added --no-daemon for better stability in Docker containers
+RUN gradle clean build -x test --no-daemon
 
-# Stage 2: Run
-FROM eclipse-temurin:17-jdk
+# Stage 2: Run - Use JDK 21
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Copy the jar from Gradle build output
