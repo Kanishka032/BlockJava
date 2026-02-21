@@ -12,6 +12,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  // Base URL for your Render Backend
+  const API_BASE_URL = "https://blockjava-1.onrender.com";
+
   const handleLogin = async () => {
     setError("");
     if (!email || !password) {
@@ -20,9 +23,10 @@ const Login = () => {
     }
 
     try {
-      const res = await fetch("import.meta.env.VITE_API_BASE_URL/api/auth/login", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // Required for cross-site cookies
         body: JSON.stringify({ email, password }),
       });
 
@@ -47,9 +51,10 @@ const Login = () => {
         isGoogleAccount: true 
       };
 
-      const res = await fetch("import.meta.env.VITE_API_BASE_URL/api/auth/google", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include", // Required for cross-site cookies
         body: JSON.stringify(googleUser),
       });
 
@@ -193,7 +198,7 @@ const Login = () => {
             <div className="flex-grow border-t-2 border-purple-50"></div>
           </div>
 
-          {/* Google Login */}
+          {/* Google Login Component */}
           <div className="flex justify-center bg-white rounded-2xl p-1 border-2 border-purple-50 hover:border-purple-200 transition-colors shadow-sm">
             <GoogleLogin 
               onSuccess={handleGoogleSuccess} 
