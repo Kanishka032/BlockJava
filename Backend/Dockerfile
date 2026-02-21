@@ -1,8 +1,8 @@
-# Stage 1: Build
-FROM gradle:8.5-jdk21 AS build
+# Stage 1: Build - Pulling the latest Gradle to satisfy Spring Boot 4.0.2
+FROM gradle:jdk21 AS build
 WORKDIR /app
 
-# Copy Gradle config from the current directory (Backend/)
+# Copy Gradle config
 COPY build.gradle settings.gradle ./
 # Copy the source code
 COPY src ./src
@@ -15,7 +15,6 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Copy the jar from the build output
-# Note: Spring Boot usually puts the jar in build/libs/
 COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8082
