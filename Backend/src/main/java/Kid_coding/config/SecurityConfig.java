@@ -11,21 +11,29 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@Bean
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(request -> {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080","https://blockjava-44bpela1j-kanishka032s-projects.vercel.app")); // add your frontend origin(s)
+                // ADD YOUR MAIN DOMAIN HERE:
+                config.setAllowedOrigins(List.of(
+                    "http://localhost:3000", 
+                    "http://localhost:8080",
+                    "https://blockjava.vercel.app", // <--- ADD THIS ONE
+                    "https://blockjava-44bpela1j-kanishka032s-projects.vercel.app"
+                )); 
                 config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
                 config.setAllowedHeaders(List.of("*"));
                 config.setAllowCredentials(true);
@@ -33,10 +41,10 @@ public class SecurityConfig {
             }))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/**").permitAll()
-                .anyRequest().permitAll() // allow all APIs temporarily
+                .anyRequest().permitAll() 
             );
 
         return http.build();
     }
-   
 }
+
