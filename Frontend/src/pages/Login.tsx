@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Code2, ArrowLeft, LogIn, Sparkles } from "lucide-react";
+import { Code2, ArrowLeft, LogIn } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,9 +10,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // Base URL for your Render Backend
+  // Base URL for your backend
   const API_BASE_URL = "https://blockjava-1.onrender.com";
 
+  // Email/Password login
   const handleLogin = async () => {
     setError("");
     if (!email || !password) {
@@ -24,7 +25,7 @@ const Login = () => {
       const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", 
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
@@ -41,59 +42,34 @@ const Login = () => {
     }
   };
 
-  // ✅ FIX: Instead of fetch, we redirect the entire window 
-  // to let Spring Boot handle the OAuth flow naturally.
+  // Google OAuth login
   const handleGoogleLogin = () => {
     window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F8F7FF] text-[#2D3142] font-sans p-4 relative overflow-hidden">
-      
+      {/* Custom Styles */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-10px) rotate(2deg); }
         }
         .animate-float { animation: float 6s ease-in-out infinite; }
-        .glass-card {
-          background: white;
-          border: 2px solid #F0E6FF;
-          box-shadow: 0 20px 40px rgba(147, 51, 234, 0.08);
-        }
-        .text-magic-gradient {
-          background: linear-gradient(135deg, #9333EA 0%, #F43F5E 100%);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
-        .btn-magic {
-          background: linear-gradient(90deg, #7C3AED 0%, #A855F7 100%);
-          box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-          transition: all 0.3s ease;
-        }
-        .btn-magic:hover {
-          transform: scale(1.02);
-          box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
-          filter: brightness(1.1);
-        }
-        .input-purple {
-          border: 2px solid #F3E8FF !important;
-          transition: all 0.2s ease;
-        }
-        .input-purple:focus {
-          border-color: #A855F7 !important;
-          background: #FAF5FF !important;
-          box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
-        }
+        .glass-card { background: white; border: 2px solid #F0E6FF; box-shadow: 0 20px 40px rgba(147, 51, 234, 0.08); }
+        .text-magic-gradient { background: linear-gradient(135deg, #9333EA 0%, #F43F5E 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-magic { background: linear-gradient(90deg, #7C3AED 0%, #A855F7 100%); box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3); transition: all 0.3s ease; }
+        .btn-magic:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4); filter: brightness(1.1); }
+        .input-purple { border: 2px solid #F3E8FF !important; transition: all 0.2s ease; }
+        .input-purple:focus { border-color: #A855F7 !important; background: #FAF5FF !important; box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1); }
       `}</style>
 
-      {/* Decorative Background Elements */}
+      {/* Decorative Background */}
       <div className="absolute top-[-5%] left-[-5%] w-[40%] h-[40%] bg-purple-200/40 blur-[100px] rounded-full"></div>
       <div className="absolute bottom-[-5%] right-[-5%] w-[40%] h-[40%] bg-pink-100/50 blur-[100px] rounded-full"></div>
 
-      {/* Back to Home */}
-      <button 
+      {/* Back Button */}
+      <button
         onClick={() => navigate("/home")}
         className="absolute top-8 left-8 flex items-center gap-2 text-purple-400 hover:text-purple-600 transition-colors font-bold z-10"
       >
@@ -102,7 +78,6 @@ const Login = () => {
       </button>
 
       <div className="w-full max-w-md z-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        
         {/* Logo Section */}
         <div className="flex flex-col items-center gap-3 mb-10">
           <div className="bg-white p-4 rounded-[2rem] shadow-xl shadow-purple-100 border-2 border-purple-50 animate-float">
@@ -113,7 +88,9 @@ const Login = () => {
           <div className="text-center">
             <h1 className="text-4xl font-black tracking-tight text-magic-gradient uppercase italic">BlockJava</h1>
             <div className="flex items-center justify-center gap-2 bg-purple-50 px-3 py-1 rounded-full mt-2">
-              <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest text-nowrap">Super Fun Coding!</span>
+              <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest text-nowrap">
+                Super Fun Coding!
+              </span>
             </div>
           </div>
         </div>
@@ -133,27 +110,27 @@ const Login = () => {
           <div className="space-y-5">
             <div className="space-y-2">
               <label className="text-[11px] font-black text-purple-300 uppercase tracking-widest ml-2">Email Address</label>
-              <Input 
+              <Input
                 className="input-purple h-14 rounded-2xl px-6 bg-slate-50/50 text-lg"
-                placeholder="codingstar@email.com" 
-                type="email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="codingstar@email.com"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
               <label className="text-[11px] font-black text-purple-300 uppercase tracking-widest ml-2">Secret Password</label>
-              <Input 
+              <Input
                 className="input-purple h-14 rounded-2xl px-6 bg-slate-50/50 text-lg"
-                placeholder="••••••••" 
-                type="password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
+                placeholder="••••••••"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            
-            <Button 
+
+            <Button
               className="w-full h-15 btn-magic text-white font-black text-xl rounded-2xl py-7 flex items-center justify-center gap-3 transition-all"
               onClick={handleLogin}
             >
@@ -168,8 +145,8 @@ const Login = () => {
             <div className="flex-grow border-t-2 border-purple-50"></div>
           </div>
 
-          {/* ✅ FIXED GOOGLE LOGIN BUTTON */}
-          <button 
+          {/* Google Login */}
+          <button
             onClick={handleGoogleLogin}
             className="w-full flex items-center justify-center gap-3 bg-white border-2 border-purple-50 hover:border-purple-200 p-3 rounded-2xl transition-all shadow-sm font-bold text-slate-600"
           >
@@ -180,7 +157,7 @@ const Login = () => {
           <div className="text-center pt-2">
             <p className="text-slate-400 text-sm font-medium">
               New to BlockJava?{' '}
-              <button 
+              <button
                 onClick={() => navigate("/signup")}
                 className="text-purple-600 font-black hover:text-pink-500 transition-colors underline underline-offset-4"
               >
