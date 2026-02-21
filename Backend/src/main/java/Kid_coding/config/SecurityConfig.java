@@ -31,7 +31,7 @@ public class SecurityConfig {
                 config.setAllowedOrigins(List.of(
                     "http://localhost:3000", 
                     "http://localhost:8080",
-                    "https://blockjava.vercel.app", // <--- ADD THIS ONE
+                    "https://blockjava-2.onrender.com", // <--- ADD THIS ONE
                     "https://blockjava-44bpela1j-kanishka032s-projects.vercel.app"
                 )); 
                 config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
@@ -47,4 +47,5 @@ public class SecurityConfig {
         return http.build();
     }
 }
+
 
