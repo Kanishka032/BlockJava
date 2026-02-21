@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { Code2, ArrowLeft, LogIn, Sparkles } from "lucide-react";
 
 const Login = () => {
@@ -26,7 +24,7 @@ const Login = () => {
       const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // Required for cross-site cookies
+        credentials: "include", 
         body: JSON.stringify({ email, password }),
       });
 
@@ -43,29 +41,10 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse: any) => {
-    try {
-      const decoded: any = jwtDecode(credentialResponse.credential);
-      const googleUser = { 
-        email: decoded.email,
-        isGoogleAccount: true 
-      };
-
-      const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // Required for cross-site cookies
-        body: JSON.stringify(googleUser),
-      });
-
-      if (res.ok) {
-        const student = await res.json();
-        localStorage.setItem("student", JSON.stringify(student));
-        navigate("/home");
-      }
-    } catch (err) {
-      setError("Google Login Error");
-    }
+  // ✅ FIX: Instead of fetch, we redirect the entire window 
+  // to let Spring Boot handle the OAuth flow naturally.
+  const handleGoogleLogin = () => {
+    window.location.href = `${API_BASE_URL}/oauth2/authorization/google`;
   };
 
   return (
@@ -76,39 +55,32 @@ const Login = () => {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-10px) rotate(2deg); }
         }
-
         .animate-float { animation: float 6s ease-in-out infinite; }
-
         .glass-card {
           background: white;
           border: 2px solid #F0E6FF;
           box-shadow: 0 20px 40px rgba(147, 51, 234, 0.08);
         }
-
         .text-magic-gradient {
           background: linear-gradient(135deg, #9333EA 0%, #F43F5E 100%);
           -webkit-background-clip: text;
           background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-
         .btn-magic {
           background: linear-gradient(90deg, #7C3AED 0%, #A855F7 100%);
           box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
           transition: all 0.3s ease;
         }
-
         .btn-magic:hover {
           transform: scale(1.02);
           box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
           filter: brightness(1.1);
         }
-
         .input-purple {
           border: 2px solid #F3E8FF !important;
           transition: all 0.2s ease;
         }
-
         .input-purple:focus {
           border-color: #A855F7 !important;
           background: #FAF5FF !important;
@@ -141,7 +113,6 @@ const Login = () => {
           <div className="text-center">
             <h1 className="text-4xl font-black tracking-tight text-magic-gradient uppercase italic">BlockJava</h1>
             <div className="flex items-center justify-center gap-2 bg-purple-50 px-3 py-1 rounded-full mt-2">
-              <Sparkles className="w-3 h-3 text-purple-500" />
               <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest text-nowrap">Super Fun Coding!</span>
             </div>
           </div>
@@ -151,7 +122,6 @@ const Login = () => {
         <div className="glass-card p-10 rounded-[3rem] space-y-8 relative overflow-hidden">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-[#1E1B4B]">Welcome Back!</h2>
-            <p className="text-slate-400 text-sm">Ready to build something awesome?</p>
           </div>
 
           {error && (
@@ -198,16 +168,14 @@ const Login = () => {
             <div className="flex-grow border-t-2 border-purple-50"></div>
           </div>
 
-          {/* Google Login Component */}
-          <div className="flex justify-center bg-white rounded-2xl p-1 border-2 border-purple-50 hover:border-purple-200 transition-colors shadow-sm">
-            <GoogleLogin 
-              onSuccess={handleGoogleSuccess} 
-              onError={() => setError("Google Login Failed")} 
-              theme="outline"
-              shape="pill"
-              width="340"
-            />
-          </div>
+          {/* ✅ FIXED GOOGLE LOGIN BUTTON */}
+          <button 
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-3 bg-white border-2 border-purple-50 hover:border-purple-200 p-3 rounded-2xl transition-all shadow-sm font-bold text-slate-600"
+          >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+            Continue with Google
+          </button>
 
           <div className="text-center pt-2">
             <p className="text-slate-400 text-sm font-medium">
@@ -221,11 +189,6 @@ const Login = () => {
             </p>
           </div>
         </div>
-
-        {/* Footer */}
-        <p className="mt-10 text-center text-purple-200 text-[10px] font-black uppercase tracking-[0.5em]">
-          © 2026 Crafted by Kanishka
-        </p>
       </div>
     </div>
   );
